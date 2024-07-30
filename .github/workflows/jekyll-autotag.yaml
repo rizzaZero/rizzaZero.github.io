@@ -18,7 +18,11 @@ jobs:
       - uses: actions/checkout@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      # Add tags based on changed files/folder changes
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy@v1
+        with:
+          provider: pages
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Add Tags
         run: |
           if [[ -n "$(git diff --name-only origin/main...HEAD _posts/*)" ]]; then
