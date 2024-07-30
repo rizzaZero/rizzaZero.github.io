@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.WORKFLOW_TOKEN }}
       - name: Add Tags
         run: |
           if [[ -n "$(git diff --name-only origin/main...HEAD _posts/*)" ]]; then
