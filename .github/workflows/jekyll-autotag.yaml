@@ -16,6 +16,8 @@ jobs:
       pages: write
     steps:
       - uses: actions/checkout@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       # Add tags based on changed files/folder changes
       - name: Add Tags
         run: |
