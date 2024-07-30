@@ -23,9 +23,4 @@ jobs:
           elif [ "${{ github.event.changes.index.markdown }}" ]; then
             echo "::set-output name=tag::index"
           fi
-      - name: Create tag
-        uses: actions/create-tag@v1
-        with:
-          tag_name: ${{ steps.determine-tag.outputs.tag }}
-          tag_message: Automatically created tag
 
