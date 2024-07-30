@@ -12,7 +12,8 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
+      pages: write
     steps:
       - uses: actions/checkout@v3
       # Add tags based on changed files/folder changes
