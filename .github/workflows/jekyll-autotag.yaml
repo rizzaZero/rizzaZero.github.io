@@ -12,15 +12,13 @@ jobs:
   tag-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Determine tag
-        id: determine-tag
+      - uses: actions/checkout@v3
+      - name: Check for changes
         run: |
-          if [ "${{ github.event.changes._posts }}" ]; then
-            echo "::set-output name=tag::post"
-          elif [ "${{ github.event.changes.about.markdown }}" ]; then
-            echo "::set-output name=tag::about"
-          elif [ "${{ github.event.changes.index.markdown }}" ]; then
-            echo "::set-output name=tag::index"
+          if [ -n "$(git diff --name-only --diff-filter=AMRDTCW HEAD^ HEAD _post)" ]; then
+            echo "post"
+          elif [ -n "$(git diff --name-only --diff-filter=AMRDTCW HEAD^ HEAD about.markdown)" ]; then
+            echo "about"
+          elif [ -n "$(git diff --name-only --diff-filter=AMRDTCW HEAD^ HEAD index.markdown)" ]; then
+            echo "index"
           fi
-
