@@ -10,4 +10,4 @@ Giving label to thing is what human do, this concept try to take thing further b
 # End About
 Concept is very hard to copywrite feel free to add your own spin on your own story.
 # Number of Push to get it right
-||||||||
+|||||||||
