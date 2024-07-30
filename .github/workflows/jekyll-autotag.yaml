@@ -1,32 +1,31 @@
-name: Jekyll Build and Deploy
+name: Jekyll Auto Tagging
 
 on:
   push:
-    branches: [main]
+    branches: [main] # Replace 'main' with your default branch
     paths:
       - '\_posts/**'
       - 'about.markdown'
       - 'index.markdown'
 
 jobs:
-  build-and-deploy:
+  tag-commit:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
     steps:
-      - uses: actions/checkout@v3
-        with:
-          github-token: ${{ secrets.WORKFLOW_TOKEN }}
-      - name: Add Tags
+      - uses: actions/checkout@v4
+      - name: Determine tag
+        id: determine-tag
         run: |
-          if [[ -n "$(git diff --name-only origin/main...HEAD _posts/*)" ]]; then
-            git tag post
+          if [ "${{ github.event.changes._posts }}" ]; then
+            echo "::set-output name=tag::post"
+          elif [ "${{ github.event.changes.about.markdown }}" ]; then
+            echo "::set-output name=tag::about"
+          elif [ "${{ github.event.changes.index.markdown }}" ]; then
+            echo "::set-output name=tag::index"
           fi
-          if [[ -n "$(git diff --name-only origin/main...HEAD about.markdown)" ]]; then
-            git tag about
-          fi
-          if [[ -n "$(git diff --name-only origin/main...HEAD index.markdown)" ]]; then
-            git tag index
-          fi
-          git push origin --tags
+      - name: Create tag
+        uses: actions/create-tag@v1
+        with:
+          tag_name: ${{ steps.determine-tag.outputs.tag }}
+          tag_message: Automatically created tag
+
