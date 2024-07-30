@@ -1,15 +1,12 @@
 name: File and Size Information
-
 on:
   push:
-    branches: [main]  # Replace with your desired branch
-
+    branches: [main] 
 jobs:
   calculate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
       - name: Calculate file and size information
         run: |
           total_files=$(git ls-files | wc -l)
